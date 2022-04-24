@@ -28,8 +28,8 @@ class Autoencoder(nn.Module):
                 nn.Sigmoid(),
                 )
                 
-                def forward(self, z):
-                    return self.nn(z)
+            def forward(self, z):
+                return self.nn(z)
         self.encoder = Encoder(output_size=dim_latent_representation)
         self.decoder = Decoder(input_size=dim_latent_representation)
     
