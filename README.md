@@ -27,6 +27,16 @@ class Autoencoder(nn.Module):
                 nn.Linear(input_size, 28 * 28),
                 nn.Sigmoid(),
                 )
+                
+                def forward(self, z):
+                    return self.nn(z)
+        self.encoder = Encoder(output_size=dim_latent_representation)
+        self.decoder = Decoder(input_size=dim_latent_representation)
+    
+    def forward(self,x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
 
 ![](./img/1.png)
 ![](./img/2.png)
