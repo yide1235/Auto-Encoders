@@ -97,6 +97,56 @@ Note that we know the advantage of ReLU is avoiding vanishing gradients. However
 we use a shallow network, this answer would not be acceptable.
 
 ## Part 3
+
+class DAE(nn.Module):
+    def __init__(self,dim_latent_representation=2):
+        super(DAE,self).__init__()
+
+        class Encoder(nn.Module):
+            def __init__(self, output_size=2):
+                super(Encoder, self).__init__()
+                self.nn = nn.Sequential(
+                nn.Linear(28 * 28, output_size),
+                )
+
+            def forward(self, x):
+                return self.nn(x)
+
+        class Decoder(nn.Module):
+            def __init__(self, input_size=2):
+                super(Decoder, self).__init__()
+
+                self.nn = nn.Sequential(
+                nn.Linear(input_size, 28 * 28),
+                nn.Tanh(),
+                )
+
+            def forward(self, z):
+                return self.nn(z)
+
+        self.encoder = Encoder(output_size=dim_latent_representation)
+        self.decoder = Decoder(input_size=dim_latent_representation)
+
+        self.dropout = nn.Dropout(0.2) # The Hinton et al. paperrecommends a dropout probability p=0.2
+        self.gaussian=torch.distributions.MultivariateNormal(torch.zeros(x.shape[1]), 0.1 *torch.eye(x.shape[1]))
+
+    # Implement this function for the DAE model
+    def add_noise(self, x, noise_type):
+        if noise_type=='Gaussian':
+            # return (x with Gaussian noise)
+            noise=self.gaussian.rsample(sample_shape=torch.Size([x.shape[0]])).to(x.device)
+            return x + noise
+        elif noise_type=='Dropout':
+            return self.dropout(x)
+        else:
+            return x
+    def forward(self,x):
+        if self.training:
+            x = self.add_noise(x, 'Gaussian')
+            x = self.encoder(x)
+            x = self.decoder(x)
+        return x
+
 ![](./img/9.png)
 ![](./img/10.png)
 ![](./img/11.png)
