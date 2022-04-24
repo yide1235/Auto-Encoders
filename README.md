@@ -5,8 +5,9 @@
 The code shows how we implemented the Vanilla autoencoder including Encoder, Decoder, and forward passes.
 Results from this autoencoder are as follows:
 
-class Autoencoder(nn.Module):
+#start of the code
 
+class Autoencoder(nn.Module):
     def __init__(self,dim_latent_representation=2):
     
         super(Autoencoder,self).__init__()
@@ -44,6 +45,7 @@ class Autoencoder(nn.Module):
 ![](./img/4.png)
 
 ## Part 2
+
 class Autoencoder(nn.Module):
     def __init__(self,dim_latent_representation=2):
         super(Autoencoder,self).__init__()
