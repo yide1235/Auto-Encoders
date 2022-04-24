@@ -44,6 +44,41 @@ class Autoencoder(nn.Module):
 ![](./img/4.png)
 
 ## Part 2
+class Autoencoder(nn.Module):
+    def __init__(self,dim_latent_representation=2):
+        super(Autoencoder,self).__init__()
+        
+        class Encoder(nn.Module):
+            def __init__(self, output_size=2):
+                super(Encoder, self).__init__()self.nn = nn.Sequential(
+                nn.Linear(28 * 28, 1024),
+                nn.ReLU(),
+                nn.Linear(1024, output_size)
+                )
+
+            def forward(self, x):
+                return self.nn(x)
+
+        class Decoder(nn.Module):
+            def __init__(self, input_size=2):
+                super(Decoder, self).__init__()
+
+                self.nn = nn.Sequential(
+                nn.Linear(input_size, 1024),
+                nn.ReLU(),
+                nn.Linear(1024, 28 * 28),
+                )
+            def forward(self, z):
+                return self.nn(z)
+
+        self.encoder = Encoder(output_size=dim_latent_representation)
+        
+        self.decoder = Decoder(input_size=dim_latent_representation)
+    def forward(self,x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
+        
 ![](./img/5.png)
 ![](./img/6.png)
 ![](./img/7.png)
