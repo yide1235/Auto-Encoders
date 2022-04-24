@@ -1,6 +1,7 @@
 # Auto-Encoders
 
 ## Implementation of Auto-Encoders
+## Part 1
 The code shows how we implemented the Vanilla autoencoder including Encoder, Decoder, and forward passes.
 Results from this autoencoder are as follows:
 ![](./img/1.png)
@@ -8,7 +9,7 @@ Results from this autoencoder are as follows:
 ![](./img/3.png)
 ![](./img/4.png)
 
-## Part2
+## Part 2
 ![](./img/5.png)
 ![](./img/6.png)
 ![](./img/7.png)
@@ -26,7 +27,7 @@ For better understanding (not required), we also trained the same model, with 10
 Note that we know the advantage of ReLU is avoiding vanishing gradients. However, since
 we use a shallow network, this answer would not be acceptable.
 
-## part3
+## Part 3
 ![](./img/9.png)
 ![](./img/10.png)
 ![](./img/11.png)
@@ -39,7 +40,7 @@ Adding noise to the input has a regularizing influence, however, should not over
 It also has a few dead (collapsed) kernels. On the other hand, DAE models have smooth filters where important areas receive higher energy. DAEs prevent overfitting and converge faster (plot loss value per epochs ). Although both Gaussian noise and Dropout loss values are similar, they are different in terms of execution time required for the training. In dropout, omitted nodes at each iteration are not updated. Gaussian noise avoids this slowdown by
 updating all nodes (kernel weights) at each iteration.
 
-## Part4
+## Part 4
 Vanilla
 
 Epoch: 20 Average loss: 0.5638
