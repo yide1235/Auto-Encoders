@@ -160,6 +160,61 @@ It also has a few dead (collapsed) kernels. On the other hand, DAE models have s
 updating all nodes (kernel weights) at each iteration.
 
 ## Part 4
+
+class VAE(nn.Module):
+    def __init__(self,dim_latent_representation=2):
+        super(VAE,self).__init__()
+
+        class Encoder(nn.Module):
+            def __init__(self, output_size=2):
+                super(Encoder, self).__init__()
+                # needs your implementation
+                self.nn = nn.Sequential(
+                nn.Linear(28 * 28, output_size),
+                )
+
+            def forward(self, x):
+            # needs your implementation
+                return self.nn(x)
+
+        class Decoder(nn.Module):
+            def __init__(self, input_size=2):
+                super(Decoder, self).__init__()
+                # needs your implementation
+                self.nn = nn.Sequential(
+                nn.Linear(input_size, 28 * 28),
+                nn.Tanh(),
+                )
+
+            def forward(self, z):
+            # needs your implementation
+                return self.nn(z)
+
+
+        self.dim_latent_representation = dim_latent_representation
+        self.encoder = Encoder(output_size=dim_latent_representation)
+        self.mu_layer = nn.Linear(self.dim_latent_representation,
+        self.dim_latent_representation)
+        self.logvar_layer = nn.Linear(self.dim_latent_representation,
+        self.dim_latent_representation)
+        self.decoder = Decoder(input_size=dim_latent_representation)
+            
+# Implement this function for the VAE model
+    def reparameterise(self, mu, logvar):
+        if self.training:
+            std = logvar.mul(0.5).exp_()
+            eps = std.data.new(std.size()).normal_()
+            return eps.mul(std).add_(mu)
+        else:
+            return mu
+
+    def forward(self,x):
+    # This function should be modified for the DAE and VAE
+        x = self.encoder(x)
+        mu, logvar = self.mu_layer(x), self.logvar_layer(x)
+        z = self.reparameterise(mu, logvar)
+        return self.decoder(z), mu, logvar
+
 Vanilla
 
 Epoch: 20 Average loss: 0.5638
