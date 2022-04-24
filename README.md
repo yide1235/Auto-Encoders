@@ -5,7 +5,9 @@
 The code shows how we implemented the Vanilla autoencoder including Encoder, Decoder, and forward passes.
 Results from this autoencoder are as follows:
 
-#start of the code
+'''
+start
+'''
 
 class Autoencoder(nn.Module):
     def __init__(self,dim_latent_representation=2):
